@@ -1,0 +1,542 @@
+local CPU = {
+  memory = {},
+  registers = {
+    a = 0,
+    x = 0,
+    y = 0,
+    pc = 0,
+    sp = 0,
+    sr = 0
+  },
+  instructions = {
+    ["00"] = function(self)
+      self:nop()
+    end,
+    ["01"] = function(self)
+      self:indirect_x()
+    end,
+    ["05"] = function(self)
+      self:zero_page()
+    end,
+    ["06"] = function(self)
+      self:zero_page_x()
+    end,
+    ["08"] = function(self)
+      self:implied()
+    end,
+    ["09"] = function(self)
+      self:immediate()
+    end,
+    ["0a"] = function(self)
+      self:accumulator()
+    end,
+    ["0d"] = function(self)
+      self:absolute()
+    end,
+    ["0e"] = function(self)
+      self:absolute_x()
+    end,
+    ["0f"] = function(self)
+      self:absolute_y()
+    end,
+    ["10"] = function(self)
+      self:relative()
+    end,
+    ["11"] = function(self)
+      self:indirect_y()
+    end,
+    ["15"] = function(self)
+      self:zero_page_x()
+    end,
+    ["16"] = function(self)
+      self:zero_page_x()
+    end,
+    ["18"] = function(self)
+      self:implied()
+    end,
+    ["19"] = function(self)
+      self:absolute_y()
+    end,
+    ["1d"] = function(self)
+      self:absolute_x()
+    end,
+    ["1e"] = function(self)
+      self:absolute_x()
+    end,
+    ["1f"] = function(self)
+      self:absolute_y()
+    end,
+    ["20"] = function(self)
+      self:absolute()
+    end,
+    ["21"] = function(self)
+      self:indirect_x()
+    end,
+    ["24"] = function(self)
+      self:zero_page()
+    end,
+    ["25"] = function(self)
+      self:zero_page()
+    end,
+    ["26"] = function(self)
+      self:zero_page()
+    end,
+    ["28"] = function(self)
+      self:implied()
+    end,
+    ["29"] = function(self)
+      self:immediate()
+    end,
+    ["2a"] = function(self)
+      self:accumulator()
+    end,
+    ["2c"] = function(self)
+      self:absolute()
+    end,
+    ["2d"] = function(self)
+      self:absolute()
+    end,
+    ["2e"] = function(self)
+      self:absolute()
+    end,
+    ["2f"] = function(self)
+      self:absolute()
+    end,
+    ["30"] = function(self)
+      self:relative()
+    end,
+    ["31"] = function(self)
+      self:indirect_y()
+    end,
+    ["35"] = function(self)
+      self:zero_page_x()
+    end,
+    ["36"] = function(self)
+      self:zero_page_x()
+    end,
+    ["38"] = function(self)
+      self:implied()
+    end,
+    ["39"] = function(self)
+      self:absolute_y()
+    end,
+    ["3d"] = function(self)
+      self:absolute_x()
+    end,
+    ["3e"] = function(self)
+      self:absolute_x()
+    end,
+    ["3f"] = function(self)
+      self:absolute_y()
+    end,
+    ["40"] = function(self)
+      self:implied()
+    end,
+    ["41"] = function(self)
+     self:indirect_x()
+    end,
+    ["45"] = function(self)
+      self:zero_page()
+    end,
+    ["46"] = function(self)
+      self:zero_page_x()
+    end,
+    ["48"] = function(self)
+      self:implied()
+    end,
+    ["49"] = function(self)
+      self:immediate()
+    end,
+    ["4a"] = function(self)
+      self:accumulator()
+    end,
+    ["4c"] = function(self)
+      self:absolute()
+    end,
+    ["4d"] = function(self)
+      self:absolute()
+    end,
+    ["4e"] = function(self)
+      self:absolute()
+    end,
+    ["4f"] = function(self)
+      self:absolute()
+    end,
+    ["50"] = function(self)
+      self:implied()
+    end,
+    ["51"] = function(self)
+      self:indirect_x()
+    end,
+    ["55"] = function(self)
+      self:zero_page()
+    end,
+    ["56"] = function(self)
+      self:zero_page_x()
+    end,
+    ["58"] = function(self)
+      self:implied()
+    end,
+    ["59"] = function(self)
+      self:immediate()
+    end,
+    ["5a"] = function(self)
+      self:accumulator()
+    end,
+    ["5c"] = function(self)
+      self:absolute()
+    end,
+    ["5d"] = function(self)
+      self:absolute()
+    end,
+    ["5e"] = function(self)
+      self:absolute()
+    end,
+    ["5f"] = function(self)
+      self:absolute()
+    end,
+    ["60"] = function(self)
+      self:relative()
+    end,
+    ["61"] = function(self)
+      self:indirect_y()
+    end,
+    ["65"] = function(self)
+      self:zero_page()
+    end,
+    ["66"] = function(self)
+      self:zero_page_x()
+    end,
+    ["68"] = function(self)
+      self:implied()
+    end,
+    ["69"] = function(self)
+      self:immediate()
+    end,
+    ["6a"] = function(self)
+      self:accumulator()
+    end,
+    ["6c"] = function(self)
+      self:absolute()
+    end,
+    ["6d"] = function(self)
+      self:absolute()
+    end,
+    ["6e"] = function(self)
+      self:absolute()
+    end,
+    ["6f"] = function(self)
+      self:absolute()
+    end,
+    ["70"] = function(self)
+      self:implied()
+    end,
+    ["71"] = function(self)
+      self:indirect_x()
+    end,
+    ["75"] = function(self)
+      self:zero_page()
+    end,
+    ["76"] = function(self)
+      self:zero_page_x()
+    end,
+    ["78"] = function(self)
+      self:implied()
+    end,
+    ["79"] = function(self)
+      self:immediate()
+    end,
+    ["7a"] = function(self)
+      self:accumulator()
+    end,
+    ["7c"] = function(self)
+      self:absolute()
+    end,
+    ["7d"] = function(self)
+      self:absolute()
+    end,
+    ["7e"] = function(self)
+      self:absolute()
+    end,
+    ["7f"] = function(self)
+      self:absolute()
+    end,
+    ["80"] = function(self)
+      self:implied()
+    end,
+    ["81"] = function(self)
+      self:indirect_x()
+    end,
+    ["84"] = function(self)
+      self:zero_page()
+    end,
+    ["85"] = function(self)self:zero_page()
+    end,
+    ["86"] = function(self)
+      self:zero_page_x()
+    end,
+    ["88"] = function(self)
+      self:implied()
+    end,
+    ["8a"] = function(self)
+      self:accumulator()
+    end,
+    ["8c"] = function(self)
+      self:absolute()
+    end,
+    ["8d"] = function(self)
+      self:absolute()
+    end,
+    ["8e"] = function(self)
+      self:absolute_x()
+    end,
+    ["90"] = function(self)
+      self:relative()
+    end,
+    ["91"] = function(self)
+      self:indirect_y()
+    end,
+    ["94"] = function(self)
+      self:zero_page()
+    end,
+    ["95"] = function(self)
+      self:zero_page()
+    end,
+    ["96"] = function(self)
+      self:zero_page_x()
+    end,
+    ["98"] = function(self)
+      self:implied()
+    end,
+    ["99"] = function(self)
+      self:immediate()
+    end,
+    ["9a"] = function(self)
+      self:accumulator()
+    end,
+    ["9c"] = function(self)
+      self:absolute()
+    end,
+    ["9d"] = function(self)
+      self:absolute()
+    end,
+    ["9e"] = function(self)
+      self:absolute_x()
+    end,
+    ["a0"] = function(self)
+      self:implied()
+    end,
+    ["a1"] = function(self)
+      self:indirect_x()
+    end,
+    ["a2"] = function(self)
+      self:immediate()
+    end,
+    ["a4"] = function(self)
+      self:zero_page()
+    end,
+    ["a5"] = function(self)
+      self:zero_page()
+    end,
+    ["a6"] = function(self)
+      self:zero_page_x()
+    end,
+    ["a8"] = function(self)
+      self:implied()
+    end,
+    ["a9"] = function(self)
+      self:immediate()
+    end,
+    ["aa"] = function(self)
+      self:accumulator()
+    end,
+    ["ac"] = function(self)
+      self:absolute()
+    end,
+    ["ad"] = function(self)
+      self:absolute()
+    end,
+    ["ae"] = function(self)
+      self:absolute_x()
+    end,
+    ["b0"] = function(self)
+      self:relative()
+    end,
+    ["b1"] = function(self)
+      self:indirect_y()
+    end,
+    ["b4"] = function(self)
+      self:zero_page()
+    end,
+    ["b5"] = function(self)
+      self:zero_page()
+    end,
+    ["b6"] = function(self)
+      self:zero_page_x()
+    end,
+    ["b8"] = function(self)
+      self:implied()
+    end,
+    ["b9"] = function(self)
+      self:immediate()
+    end,
+    ["ba"] = function(self)
+      self:accumulator()
+    end,
+    ["bc"] = function(self)
+      self:absolute()
+    end,
+    ["bd"] = function(self)
+      self:absolute()
+    end,
+    ["be"] = function(self)
+      self:absolute_x()
+    end,
+    ["c0"] = function(self)
+      self:implied()
+    end,
+    ["c1"] = function(self)
+      self:indirect_x()
+    end,
+    ["c4"] = function(self)
+      self:zero_page()
+    end,
+    ["c5"] = function(self)
+      self:zero_page()
+    end,
+    ["c6"] = function(self)
+      self:zero_page_x()
+    end,
+["c8"] = function(self)
+      self:implied()
+    end,
+    ["c9"] = function(self)
+      self:immediate()
+    end,
+    ["ca"] = function(self)
+      self:accumulator()
+    end,
+    ["cc"] = function(self)
+      self:absolute()
+    end,
+    ["cd"] = function(self)
+      self:absolute()
+    end,
+    ["ce"] = function(self)
+      self:absolute_x()
+    end,
+    ["d0"] = function(self)
+      self:relative()
+    end,
+    ["d1"] = function(self)
+      self:indirect_y()
+    end,
+    ["d4"] = function(self)
+      self:zero_page()
+    end,
+    ["d5"] = function(self)
+      self:zero_page()
+    end,
+    ["d6"] = function(self)
+      self:zero_page_x()
+    end,
+    ["d8"] = function(self)
+      self:implied()
+    end,
+    ["d9"] = function(self)
+      self:immediate()
+    end,
+    ["da"] = function(self)
+      self:accumulator()
+    end,
+    ["dc"] = function(self)
+      self:absolute()
+    end,
+    ["dd"] = function(self)
+      self:absolute()
+    end,
+    ["de"] = function(self)
+      self:absolute_x()
+    end,
+    ["e0"] = function(self)
+      self:implied()
+    end,
+    ["e1"] = function(self)
+      self:indirect_x()
+    end,
+    ["e4"] = function(self)
+      self:zero_page()
+    end,
+    ["e5"] = function(self)
+      self:zero_page()
+    end,
+    ["e6"] = function(self)
+      self:zero_page_x()
+    end,
+    ["e8"] = function(self)
+      self:implied()
+    end,
+    ["e9"] = function(self)
+      self:immediate()
+    end,
+    ["ea"] = function(self)
+      self:accumulator()
+    end,
+    ["ec"] = function(self)
+      self:absolute()
+    end,
+    ["ed"] = function(self)
+      self:absolute()
+    end,
+    ["ee"] = function(self)
+      self:absolute_x()
+    end,
+    ["f0"] = function(self)
+      self:relative()
+    end,
+    ["f1"] = function(self)
+      self:indirect_y()
+    end,
+    ["f4"] = function(self)
+      self:zero_page()
+    end,
+    ["f5"] = function(self)
+      self:zero_page()
+    end,
+    ["f6"] = function(self)
+      self:zero_page_x()
+    end,
+    ["f8"] = function(self)
+      self:implied()
+    end,
+    ["f9"] = function(self)
+      self:immediate()
+    end,
+    ["fa"] = function(self)
+      self:accumulator()
+    end,
+    ["fc"] = function(self)
+      self:absolute()
+    end,
+    ["fd"] = function(self)
+      self:absolute()
+    end,
+    ["fe"] = function(self)
+      self:absolute_x()
+    end
+  },
+  load_memory = function(self, data)
+    for i = 0, #data do
+      self.memory[i] = data[i]
+    end
+  end,
+  run = function(self)
+    while true do
+      local opcode = string.format("%02x", self.memory[self.registers.pc])
+      self.registers.pc = self.registers.pc + 1
+      self.instructions[opcode](self)
+    end
+  end
+}
+
+return CPU
